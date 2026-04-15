@@ -32,7 +32,7 @@ export const EmailQueueService = {
         
         const result = await resend.emails.send({
             from: env.mail.from,
-            to: emailData.to_email,
+            to: "rejen.aligora@ynov.com", // Sur Resend, la version gratuite n'autorise que l'envoie de mail test depuis son propre compte. A remplacer par emailData.to_email,
             subject: emailData.subject,
             html: html,
         });

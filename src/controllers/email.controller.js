@@ -21,7 +21,7 @@ export const EmailController = {
             const messages = [];
             for (const email of emails) {
                 // console.log(`Processing email: `, email);
-                const response = await EmailQueueService.sendEmail(email.dataValues, email.data);
+                const response = await EmailQueueService.sendEmail(email.dataValues, { name: email.data.name, email: email.to_email });
                 if (response.result.error) {
                     messages.push(`Failed to send email to ${email.to_email}: ${response.result.error.message}`);
                 } else {
@@ -36,7 +36,7 @@ export const EmailController = {
     },
     queueEmail: async (req, res) => {
         try {
-            const { emails, subject, body_template, data, scheduled_at } = req.body.data;
+            const { emails, subject, body_template, data, scheduled_at } = req.body;
             const { error } = emailSchema.validate({ emails, subject, body_template, data, scheduled_at });
             if (error) {
                 return res.status(400).json({ message: error.details[0].message });
